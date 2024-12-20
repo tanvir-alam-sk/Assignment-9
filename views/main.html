@@ -1,0 +1,255 @@
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      position: relative;
+    }
+
+    /* Dropdown Menu */
+    .dropdown-btn {
+      width: 100%;
+      background: #333;
+      color: white;
+      padding: 15px 20px;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      font-size: 16px;
+      border-radius: 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 5px;
+    }
+
+    .dropdown-btn:hover {
+      background: #444;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: white;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      border-radius: 0 0 4px 4px;
+      z-index: 1000;
+    }
+
+    .dropdown-content a {
+      color: #333;
+      padding: 12px 20px;
+      text-decoration: none;
+      display: block;
+      border-bottom: 1px solid #eee;
+    }
+
+    .dropdown-content a:last-child {
+      border-bottom: none;
+    }
+
+    .dropdown-content a:hover {
+      background: #f5f5f5;
+    }
+
+    .show {
+      display: block;
+    }
+
+    /* Slider */
+    .slider {
+      width: 100%;
+      height: 400px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+    }
+
+    .slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.5s ease-in-out;
+      display: none;
+    }
+
+    .slide.active {
+      display: block;
+    }
+
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .dots {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+      z-index: 100;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+      border: none;
+    }
+
+    .dot.active {
+      background: rgb(26, 26, 26);
+    }
+
+    .caption {
+      text-align: center;
+      padding: 20px;
+    }
+
+    .caption h2 {
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .caption p {
+      color: #666;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Dropdown Menu -->
+    <select class="dropdown-btn" id="dropdown" onclick="">
+        <option value="abys" selected>Image 1</option>
+      </select>
+
+    <!-- Image Slider -->
+    <div class="slider">
+      <div class="slide active">
+        <img src="https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg" alt="Slide 1">
+      </div>
+      <div class="slide">
+        <img src="https://img.freepik.com/free-photo/bright-neon-colors-shining-wild-chameleon_23-2151682815.jpg" alt="Slide 2">
+      </div>
+      <div class="slide">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSst_1aqxgbDE0BAzReTKTrkvipc2Mg8YW_M8m-GfBWBk_tISDQsHr33t7FV6q0oOqwVvU&usqp=CAU" alt="Slide 3">
+      </div>
+      <div class="slide">
+        <img src="https://img.freepik.com/premium-photo/closeup-colorful-chameleon-psychedelic-art-with-concept-style-macro-generative-ai_473751-983.jpg" alt="Slide 4">
+      </div>
+
+      <button class="nav-button prev" onclick="navigate(-1)">❮</button>
+      <button class="nav-button next" onclick="navigate(1)">❯</button>
+
+      <div class="dots">
+        <button class="dot active" onclick="changeSlide(0)"></button>
+        <button class="dot" onclick="changeSlide(1)"></button>
+        <button class="dot" onclick="changeSlide(2)"></button>
+        <button class="dot" onclick="changeSlide(3)"></button>
+      </div>
+    </div>
+
+    <div class="caption">
+      <h2>Abyssinian</h2>
+      <p>The Abyssinian is easy to care for, and a joy to have in your home. They're affectionate cats and love both people and other animals.</p>
+    </div>
+  </div>
+ 
+  <script>
+    document.getElementById("dropdown").addEventListener("submit", function(event) {
+        event.preventDefault();
+        const breedID = document.getElementById("breed_id").value;
+
+        fetch(`/breeds/get?breed_id=${breedID}`)
+            .then(response => response.json())
+            .then(data => {
+            document.getElementById("result").innerText = JSON.stringify(data, null, 2);
+            })
+            .catch(error => {
+            document.getElementById("result").innerText = "Error fetching breed data.";
+            });
+        });
+
+    function defaultBreed(){
+        fetch("/breeds/get?breed_id=abys")
+            .then(response => response.json())
+            .then(data => {
+            console.log(data)
+            document.getElementById("result").innerText = JSON.stringify(data, null, 2);
+            })
+            .catch(error => {
+            document.getElementById("result").innerText = "Error fetching breed data.";
+            });
+    }
+
+    defaultBreed()
+
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
+    const dropdownBtn = document.querySelector('.dropdown-btn');
+    const dropdownContent = document.querySelector('.dropdown-content'); 
+
+    // Dropdown toggle
+    dropdownBtn.addEventListener('click', () => {
+      dropdownContent.classList.toggle('show');
+    });
+
+    // Close dropdown when clicking outside
+    window.addEventListener('click', (e) => {
+      if (!e.target.matches('.dropdown-btn') && !e.target.parentElement.matches('.dropdown-btn')) {
+        if (dropdownContent.classList.contains('show')) {
+          dropdownContent.classList.remove('show');
+        }
+      }
+    });
+
+    function updateSlides() {
+      slides.forEach(slide => slide.classList.remove('active'));
+      dots.forEach(dot => dot.classList.remove('active'));
+      
+      slides[currentSlide].classList.add('active');
+      dots[currentSlide].classList.add('active');
+    }
+
+    function navigate(direction) {
+      currentSlide = (currentSlide + direction + slides.length) % slides.length;
+      updateSlides();
+    }
+
+    function changeSlide(index) {
+      currentSlide = index;
+      updateSlides();
+      dropdownContent.classList.remove('show');
+    }
+
+    // Auto advance slides every 5 seconds
+    setInterval(() => navigate(1), 5000);
+  </script>
+</body>
+</html>

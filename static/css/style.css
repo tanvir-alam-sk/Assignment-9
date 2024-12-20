@@ -1,0 +1,474 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+body {
+    background-color: #fff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+.left-section {
+    padding-top: 2rem;
+}
+
+.title-highlight {
+    background-color: #ffd7d7;
+    padding: 0 0.5rem;
+    display: inline-block;
+}
+
+h1 {
+    font-size: 4rem;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+}
+
+.subtitle {
+    font-size: 2.5rem;
+    font-weight: 900;
+    margin-bottom: 2rem;
+}
+
+.description {
+    color: #666;
+    margin-bottom: 1rem;
+}
+
+.stats {
+    color: #666;
+    margin-bottom: 2rem;
+}
+
+.buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-primary {
+    background-color: #000;
+    color: white;
+    border: none;
+}
+
+.btn-secondary {
+    background-color: white;
+    color: #000;
+    border: 1px solid #000;
+}
+
+.btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.right-section {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.nav-tabs {
+    display: flex;
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+}
+a{
+    text-decoration: none;
+}
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    margin-right: 2rem;
+    color: #666;
+    cursor: pointer;
+}
+
+.nav-item  .fa-heart{
+    margin: 0;
+}
+
+.nav-item.active {
+    color: #de7d0f;
+
+}
+
+.nav-item.active span{
+    font-weight: 600;
+}        
+
+.cat-image {
+    width: 600px;
+    height: 400px;
+    object-fit: cover;
+}
+
+#loader{
+    width: 600px;
+    height: 400px;
+    position: relative;
+}
+
+.interaction-buttons {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+}
+
+.fa-regular{
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: #666;
+    margin: 5px;
+}
+.fa-up-down ,.fa-magnifying-glass,.fa-heart{
+    font-size: 20px;
+}
+
+.fa-regular:hover {
+    color: #ffb340;
+}
+
+
+/* ----------------   Loader    ------------- */
+
+@-webkit-keyframes rotate {
+0% {
+    transform: rotate(-0.08turn);
+}
+100% {
+    transform: rotate(-1.08turn);
+}
+}
+@-moz-keyframes rotate {
+0% {
+    transform: rotate(-0.08turn);
+}
+100% {
+    transform: rotate(-1.08turn);
+}
+}
+@-o-keyframes rotate {
+0% {
+    transform: rotate(-0.08turn);
+}
+100% {
+    transform: rotate(-1.08turn);
+}
+}
+@keyframes rotate {
+0% {
+    transform: rotate(-0.08turn);
+}
+100% {
+    transform: rotate(-1.08turn);
+}
+}
+@-webkit-keyframes hideEye {
+0%, 10%, 85% {
+    margin-top: 0;
+    height: 50px;
+}
+30%, 65% {
+    margin-top: 20px;
+    height: 30px;
+}
+}
+@-moz-keyframes hideEye {
+0%, 10%, 85% {
+    margin-top: 0;
+    height: 50px;
+}
+30%, 65% {
+    margin-top: 20px;
+    height: 30px;
+}
+}
+@-o-keyframes hideEye {
+0%, 10%, 85% {
+    margin-top: 0;
+    height: 50px;
+}
+30%, 65% {
+    margin-top: 20px;
+    height: 30px;
+}
+}
+@keyframes hideEye {
+0%, 10%, 85% {
+    margin-top: 0;
+    height: 50px;
+}
+30%, 65% {
+    margin-top: 20px;
+    height: 30px;
+}
+}
+@-webkit-keyframes blink {
+0%, 10%, 85% {
+    bottom: 0;
+}
+30%, 65% {
+    bottom: 20px;
+}
+0% {
+    transform: rotate(-0.08turn);
+}
+100% {
+    transform: rotate(-1.08turn);
+}
+}
+@-moz-keyframes blink {
+0%, 10%, 85% {
+    bottom: 0;
+}
+30%, 65% {
+    bottom: 20px;
+}
+0% {
+    transform: rotate(-0.08turn);
+}
+100% {
+    transform: rotate(-1.08turn);
+}
+}
+@-o-keyframes blink {
+0%, 10%, 85% {
+    bottom: 0;
+}
+30%, 65% {
+    bottom: 20px;
+}
+0% {
+    transform: rotate(-0.08turn);
+}
+100% {
+    transform: rotate(-1.08turn);
+}
+}
+@keyframes blink {
+0%, 10%, 85% {
+    bottom: 0;
+}
+30%, 65% {
+    bottom: 20px;
+}
+0% {
+    transform: rotate(-0.08turn);
+}
+100% {
+    transform: rotate(-1.08turn);
+}
+}
+#loader  .loader {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 260px;
+    height: 260px;
+    margin-left: -130px;
+    margin-top: -130px;
+}
+#loader  .loader .track {
+    width: 100%;
+    height: 100%;
+    border: solid white;
+    border-width: 5px 5px 3px 0;
+    border-top-color: transparent;
+    border-radius: 50%;
+    margin-left: -3px;
+    margin-top: -3px;
+    -webkit-animation: rotate 3s infinite linear;
+    -moz-animation: rotate 3s infinite linear;
+    -o-animation: rotate 3s infinite linear;
+    animation: rotate 3s infinite linear;
+}
+#loader  .loader .track .mouse {
+    position: absolute;
+    right: 31px;
+    top: 18px;
+    width: 25px;
+    height: 25px;
+    background: white;
+    border-radius: 80% 0 55% 50%/55% 0 80% 50%;
+    transform: rotate(-95deg);
+}
+#loader  .loader .track .mouse:before, #loader  .loader .track .mouse:after {
+    position: absolute;
+    content: "";
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: inherit;
+}
+#loader  .loader .track .mouse:before {
+    left: 5px;
+    top: -4px;
+}
+#loader  .loader .track .mouse:after {
+    left: 20px;
+    top: 11px;
+}
+#loader  .loader .face {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 130px;
+    height: 130px;
+    margin-left: -65px;
+    margin-top: -65px;
+}
+#loader  .loader .face:before, #loader  .loader .face:after {
+    position: absolute;
+    content: "";
+    width: 50%;
+    height: 100%;
+}
+#loader  .loader .face:before {
+    background: #c8c6c9;
+    border-top-left-radius: 65px;
+    border-bottom-left-radius: 55px;
+}
+#loader  .loader .face:after {
+    left: 50%;
+    background: #d0ced1;
+    border-top-right-radius: 65px;
+    border-bottom-right-radius: 55px;
+}
+#loader  .loader .face .ears-container {
+    position: absolute;
+    top: -8px;
+    width: 130px;
+    height: 50px;
+}
+#loader  .loader .face .ears-container:before, #loader  .loader .face .ears-container:after {
+    position: absolute;
+    content: "";
+    width: 0;
+    height: 0;
+    border-top: 35px solid transparent;
+    border-bottom: 35px solid transparent;
+}
+#loader  .loader .face .ears-container:before {
+    border-left: 35px solid #c8c6c9;
+}
+#loader  .loader .face .ears-container:after {
+    right: 0;
+    border-right: 35px solid #d0ced1;
+}
+#loader  .loader .face .eyes-container {
+    position: absolute;
+    overflow: hidden;
+    left: 50%;
+    top: 30px;
+    width: 106px;
+    height: 50px;
+    margin-left: -53px;
+    z-index: 1;
+    -webkit-animation: hideEye 3s infinite linear;
+    -moz-animation: hideEye 3s infinite linear;
+    -o-animation: hideEye 3s infinite linear;
+    animation: hideEye 3s infinite linear;
+}
+#loader  .loader .face .eyes-container .eye {
+    position: relative;
+    bottom: 0;
+    float: left;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    color: #c8c6c9;
+    background: white;
+    -webkit-animation: blink 3s infinite linear;
+    -moz-animation: blink 3s infinite linear;
+    -o-animation: blink 3s infinite linear;
+    animation: blink 3s infinite linear;
+}
+#loader  .loader .face .eyes-container .eye:after {
+    position: absolute;
+    content: "";
+    top: 4px;
+    right: 14px;
+    width: 12px;
+    height: 12px;
+    border-radius: inherit;
+    background: #838091;
+}
+#loader  .loader .face .eyes-container .eye:last-child {
+    float: right;
+    color: #d0ced1;
+}
+#loader  .loader .face .phiz {
+    position: absolute;
+    left: 50%;
+    top: 66px;
+    width: 32px;
+    height: 48px;
+    margin-left: -16px;
+    z-index: 1;
+}
+#loader  .loader .face .phiz .nose {
+    width: 100%;
+    height: 15px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+    background: #838091;
+}
+#loader  .loader .face .phiz .lip {
+    position: relative;
+    left: 50%;
+    width: 4px;
+    height: 12px;
+    margin-left: -2px;
+    background: #838091;
+}
+#loader  .loader .face .phiz .lip:before {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 5px;
+    background: #767385;
+}
+.loader .face .phiz .mouth {
+    position: relative;
+    left: 50%;
+    width: 20px;
+    height: 6px;
+    margin-left: -13px;
+    background: white;
+    border: 3px solid #838091;
+    border-bottom-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+}
+
+/* --------------------   Loader ---------------------- */

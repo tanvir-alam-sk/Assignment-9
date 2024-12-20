@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Slider with Dropdown</title>
+  <style>
+    /* General styles */
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    header {
+      position: absolute;
+      top: 20px;
+      left: 0;
+      width: 100%;
+      z-index: 1;
+    }
+
+    /* Dropdown Menu */
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .dropdown-btn {
+      background-color: #333;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .dropdown-btn:hover {
+      background-color: #555;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+    }
+
+    .dropdown-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #ddd;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    /* Slider styles */
+    .slider-container {
+      position: relative;
+      width: 100%;
+      max-width: 100%;
+      margin-top: 80px; /* Space for the dropdown */
+    }
+
+    .slider {
+      display: flex;
+      width: 300%;
+      transition: transform 0.5s ease;
+    }
+
+    .slider img {
+      width: 33.33%;
+      height: auto;
+    }
+
+    /* Slider buttons */
+    .slider-buttons {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+    }
+
+    button {
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      border: none;
+      padding: 10px;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="dropdown">
+      <button class="dropdown-btn">Menu</button>
+      <div class="dropdown-content">
+        <a href="#">Item 1</a>
+        <a href="#">Item 2</a>
+        <a href="#">Item 3</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="slider-container">
+    <div class="slider">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmCy16nhIbV3pI1qLYHMJKwbH2458oiC9EmA&s" alt="Image 1">
+      <img src="https://img.freepik.com/free-photo/bright-neon-colors-shining-wild-chameleon_23-2151682815.jpg" alt="Image 2">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTj4n5C2Ir-5Jn_6Ss9S7rwh8Xxm1KqqxpLslJR5wT8azRt4hcru2Q1ZTPG-mq0TW9nqag&usqp=CAU" alt="Image 3">
+    </div>
+    <div class="slider-buttons">
+      <button class="prev">&#10094;</button>
+      <button class="next">&#10095;</button>
+    </div>
+  </div>
+
+  <script>
+    let currentIndex = 0;
+    const images = document.querySelectorAll('.slider img');
+    const totalImages = images.length;
+    const slider = document.querySelector('.slider');
+
+    // Function to move to the next image
+    function nextImage() {
+      currentIndex = (currentIndex + 1) % totalImages;
+      slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+    }
+
+    // Function to move to the previous image
+    function prevImage() {
+      currentIndex = (currentIndex - 1 + totalImages) % totalImages;
+      slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+    }
+
+    // Set interval for auto-sliding every 3 seconds
+    setInterval(nextImage, 3000);
+
+    // Add event listeners for the buttons
+    document.querySelector('.next').addEventListener('click', nextImage);
+    document.querySelector('.prev').addEventListener('click', prevImage);
+  </script>
+</body>
+</html>
