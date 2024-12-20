@@ -37,8 +37,18 @@ func (c *BreedsController) GetBreeds() {
 	// Get the breed ID from query parameters
 	breedID := c.GetString("breed_ids")
 
+	fmt.Println("breedID", breedID)
+
 	// Build the API URL
-	apiURL := fmt.Sprintf("%s/breeds?breed_ids=%s", baseURL, breedID)
+	var apiURL string
+
+	if breedID != "" {
+		apiURL = fmt.Sprintf("%s/breeds?breed_ids=%s&limit=6", baseURL, breedID)
+		fmt.Println("in if apiURL : ", apiURL)
+	} else {
+		apiURL = fmt.Sprintf("%s/breeds?breed_ids=%s", baseURL, breedID)
+		fmt.Println("in else apiURL : ", apiURL)
+	}
 
 	client := &http.Client{}
 	req, err := http.NewRequest("GET", apiURL, nil)
@@ -47,8 +57,6 @@ func (c *BreedsController) GetBreeds() {
 		c.ServeJSON()
 		return
 	}
-
-	fmt.Println("req :", req)
 
 	// Set API Key in the header
 	req.Header.Set("x-api-key", apiKey)
@@ -76,9 +84,10 @@ func (c *BreedsController) GetBreeds() {
 		return
 	}
 
+	fmt.Println("req apiURL :", len(breeds))
 	// Return the first breed (as the API returns a slice)
 	if len(breeds) > 0 {
-		c.Data["json"] = breeds[0]
+		c.Data["json"] = breeds[0:6]
 	} else {
 		c.Data["json"] = map[string]string{"error": "No breed found"}
 	}
