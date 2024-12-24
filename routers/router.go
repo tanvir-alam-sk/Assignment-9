@@ -16,6 +16,9 @@ func init() {
 	// Route for the JSON API
 	beego.Router("/cat/get-image", &controllers.CatController{}, "get:GetCatImage")
 
-	beego.Router("/breeds", &controllers.BreedsController{}, "get:FetchBreed")
+	beego.Router("/breeds/catagory", &controllers.BreedsController{}, "get:GetBreedsCatarory")
 	beego.Router("/breeds/get", &controllers.BreedsController{}, "get:GetBreeds")
+
+	beego.Router("/api/favorites", &controllers.FavoritesController{}, "get:GetFavorites")
+	beego.Router("/api/favorites", &controllers.FavoritesController{}, "post:SaveFavorite")
 }

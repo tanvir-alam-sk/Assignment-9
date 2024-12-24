@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Cat API</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/breed.css">
+    <link rel="stylesheet" href="/static/css/favorite.css">
 </head>
+
 <body>
     <div class="container">
         <div class="left-section">
@@ -22,59 +26,136 @@
                 <button class="btn btn-secondary">READ OUR GUIDES</button>
             </div>
         </div>
-        <div class="right-section">
+        <div class="right-section" id="right-section">
             <div class="nav-tabs">
-                <a href="/cat/image">
-                <div class="nav-item active">
+                <button onclick="votingSectionOpen()">
+                    <div class="nav-item active">
                         <i class="fa-solid fa-up-down"></i>
                         <span>Voting</span>
                     </div>
-                </a>
-                <a href="/breeds">
+                </button>
+                <button onclick="breedSectionOpen()">
                     <div class="nav-item">
-                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <i class="fa-solid fa-magnifying-glass" id=""></i>
                         <span>Breeds</span>
                     </div>
-                </a>
-                <a href="/cat/image">
-                    <div class="nav-item">
-                        <i class="fa-regular fa-heart"></i>
+                </button>
+                <button>
+                    <div class="nav-item" onclick="favoriteSectionOpen()">
+                        <i class="fa-regular fa-heart" ></i>
                         <span>Favs</span>
                     </div>
-                </a>
+                </button>
             </div>
-            <img src="https://cdn2.thecatapi.com/images/MTkzMzUzNg.jpg" alt="Random Cat" class="cat-image" id="cat-image">
-            <!-- loader -->
-            <div id="loader" style="display: none;">
-                <div class="loader">
-                    <div class="track">
-                      <div class="mouse"></div>
+
+            <div id="voting-section" class=" content-section visible">
+                <img src="https://cdn2.thecatapi.com/images/MTkzMzUzNg.jpg" alt="Random Cat" class="cat-image"
+                    id="cat-image">
+                <!-- loader -->
+                <div id="loader" style="display: none;">
+                    <div class="loader">
+                        <div class="track">
+                            <div class="mouse"></div>
+                        </div>
+                        <div class="face">
+                            <div class="ears-container"></div>
+                            <div class="eyes-container">
+                                <div class="eye"></div>
+                                <div class="eye"></div>
+                            </div>
+                            <div class="phiz">
+                                <div class="nose"></div>
+                                <div class="lip"></div>
+                                <div class="mouth"></div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="face">
-                      <div class="ears-container"></div>
-                      <div class="eyes-container">
-                        <div class="eye"></div>
-                        <div class="eye"></div>
-                      </div>
-                      <div class="phiz">
-                        <div class="nose"></div>
-                        <div class="lip"></div>
-                        <div class="mouth"></div>
-                      </div>
+                </div>
+                <div class="interaction-buttons">
+                    <i class="fa-regular fa-heart" onclick="favoriteCat()"></i>
+                    <div class="fa-regular-btn">
+                        <i class="fa-regular fa-thumbs-up" id="fa-thumbs-up"></i>
+                        <i class="fa-regular fa-thumbs-down"></i>
                     </div>
-                  </div>
+                </div>
             </div>
-            <div class="interaction-buttons">
-                <i class="fa-regular fa-heart" onclick="favoriteCat()"></i>
-                <div class="fa-regular-btn">
-                    <i class="fa-regular fa-thumbs-up" id="fa-thumbs-up"></i>
-                    <i class="fa-regular fa-thumbs-down"></i>
+
+            <div id="breed-section" class="content-section">
+                <div>
+                    <!-- Dropdown Menu -->
+                    <select class="dropdown-btn" id="dropdown" onclick="selectCats()">
+                    </select>
+
+                    <!-- Image Slider -->
+                    <div class="slider" id="slider">
+                        <div class="slide active">
+                            <img id="firstImage"
+                                src="https://img.freepik.com/free-photo/cute-cat-spending-time-indoors_23-2150649172.jpg"
+                                alt="Slide 1">
+                        </div>
+                        <div class="slide">
+                            <img id="secondImage"
+                                src="https://img.freepik.com/free-photo/nature-animals_1122-1999.jpg?semt=ais_hybrid"
+                                alt="Slide 2">
+                        </div>
+                        <div class="slide">
+                            <img id="thirdImage"
+                                src="https://img.freepik.com/free-photo/cute-cat-spending-time-indoors_23-2150649131.jpg"
+                                alt="Slide 3">
+                        </div>
+                        <div class="slide">
+                            <img id="forthImage"
+                                src="https://img.freepik.com/premium-photo/cat-with-light-brown-color-are-sleeping-with-orange-background_34985-189.jpg"
+                                alt="Slide 4">
+                        </div>
+                        <!-- <div class="slide">
+                        <img id="fifthImage" src="https://img.freepik.com/premium-photo/closeup-colorful-chameleon-psychedelic-art-with-concept-style-macro-generative-ai_473751-983.jpg" alt="Slide 4">
+                      </div>
+                      <div class="slide">
+                        <img id="sixthImage" src="https://img.freepik.com/premium-photo/closeup-colorful-chameleon-psychedelic-art-with-concept-style-macro-generative-ai_473751-983.jpg" alt="Slide 4">
+                      </div> -->
+                    </div>
+
+                    <div class="dots-btn-section">
+                        <div class="dots">
+                            <button class="dot active" onclick="changeSlide(0)"></button>
+                            <button class="dot" onclick="changeSlide(1)"></button>
+                            <button class="dot" onclick="changeSlide(2)"></button>
+                            <button class="dot" onclick="changeSlide(3)"></button>
+                            <!-- <button class="dot" onclick="changeSlide(4)"></button>
+                        <button class="dot" onclick="changeSlide(5)"></button> -->
+                        </div>
+                    </div>
+                    <div class="caption">
+                        <h2 id="caption_title">Abyssinian <span id="origin"></span></h2>
+                        <p id="caption_description">The Abyssinian is easy to care for, and a joy to have in your home.
+                            They're affectionate cats and love both people and other animals.</p>
+                        <br>
+                        <a id="wiki" href="https://en.wikipedia.org/wiki/Abyssinian_(cat)">WIKIPEDIA</a>
+                    </div>
+                </div>
+            </div>
+
+            <div id="favorite-section" class="content-section">
+                <div>
+                    <button id="grid-view-btn" class="active">
+                        <i class="fa-solid fa-border-all grid-icon"></i>
+                    </button>
+                    <button id="list-view-btn">
+                        <i class="fa-solid fa-bars list-icon"></i>
+                    </button>
+                </div>
+                <div id="image-section">
                 </div>
             </div>
         </div>
+
     </div>
 
-    <script src="/static/js/main.js">
-    </script>
+    <script src="/static/js/main.js"></script>
+    <script src="/static/js/breed.js"></script>
+    <script src="/static/js/fav.js"></script>
+    <script src="/static/js/utility.js"></script>
 </body>
+
 </html>

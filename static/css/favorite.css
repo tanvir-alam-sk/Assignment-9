@@ -1,0 +1,76 @@
+button {
+    border: none;
+}
+
+.content-section {
+    display: none;
+}
+
+.visible {
+    display: block;
+}
+
+button {
+    padding: 10px;
+    border: none;
+    background-color: #f0f0f0; /* Default button color */
+    color: #000;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button.active {
+    background-color: #007bff; /* Active button color */
+    color: #fff;
+}
+
+.grid-icon,
+.list-icon{
+font-weight: 800;
+padding: 5px;
+font-size: 30px;
+margin: 10px;
+}
+
+/* Default button styling */
+button {
+    padding: 5px;
+    border: none;
+    background-color: #f0f0f0; /* Default button color */
+    color: #000;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button.active {
+    background-color: #007bff; /* Active button color */
+    color: #fff;
+}
+
+/* Default grid view */
+#image-section {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    height: 400px;
+    overflow: auto;
+}
+
+#image-section img {
+    width: 170px;
+    height: 150px;
+    object-fit: cover;
+}
+
+/* List view */
+#image-section.list-view {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#image-section.list-view img {
+    width: 100%;
+    height: auto;
+}

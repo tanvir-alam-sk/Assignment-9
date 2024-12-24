@@ -38,11 +38,10 @@ func (c *CatController) GetCatImage() {
 			responseChannel <- nil
 			return
 		}
-		fmt.Println("ApiKey is", apiKey)
+
 		if apiKey != "" {
 			req.Header.Set("x-api-key", apiKey)
 		}
-		fmt.Println("apiKey is", apiKey)
 
 		resp, err := client.Do(req)
 		if err != nil {
