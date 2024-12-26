@@ -2,7 +2,6 @@
 package controllers
 
 import (
-	"bytes"
 	"encoding/json"
 	"example-beego/controllers"
 	"net/http"
@@ -10,9 +9,7 @@ import (
 	"testing"
 
 	beego "github.com/beego/beego/v2/server/web"
-	"github.com/beego/beego/v2/server/web/context"
 	"github.com/stretchr/testify/assert"
-	// "github.com/beego/beego/v2/server/web/context"
 )
 
 func setupApp() {
@@ -82,16 +79,12 @@ func TestSaveFavorite(t *testing.T) {
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
 			// Create test context
-			// w := httptest.NewRecorder()
-			reqBody, _ := json.Marshal(tc.requestBody)
-			r, _ := http.NewRequest("POST", "/favorites", bytes.NewBuffer(reqBody))
+			w := httptest.NewRecorder()
+			// reqBody, _ := json.Marshal(tc.requestBody)
+			r, _ := http.NewRequest("POST", "/favorites", nil)
 
-			var w *httptest.ResponseRecorder
-			// Set up test context
-			controller.Ctx = &context.Context{
-				ResponseWriter: w,
-				Request:        r,
-			}
+			
+			beego.BeeApp.Handlers.ServeHTTP(w,r)
 
 			// Call the handler
 			controller.SaveFavorite()

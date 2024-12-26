@@ -7,8 +7,6 @@ import (
 )
 
 func init() {
-	// beego.Router("/", &controllers.MainController{})
-	// beego.Router("/cat-image", &controllers.CatController{}, "get:GetCatImage")
 
 	// Route for rendering the HTML page
 	beego.Router("/", &controllers.CatController{}, "get:FetchCatImage")

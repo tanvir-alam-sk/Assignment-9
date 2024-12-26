@@ -73,6 +73,8 @@ The frontend is built using vanilla JavaScript. You can interact with the applic
 
 To run unit tests and ensure 80% code coverage:
 
+cd tests
+
 ```
 go test -cover
 
