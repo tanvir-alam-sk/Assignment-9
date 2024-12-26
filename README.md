@@ -37,7 +37,6 @@ git clone https://github.com/tanvir-alam-sk Cat-Image-Viewer
 cd Cat-Image-Viewer
 ```
 
-
 ## Setup Instructions
 
 ### 2. Install Go dependencies
@@ -56,6 +55,15 @@ runmode = dev
 apikey = <your-api-key-here>
 apiurl=https://api.thecatapi.com/v1
 ```
+
+### 4. Run the Application
+
+```
+bee run
+
+```
+
+The server will start on [http://localhost:8080](http://localhost:8080).
 
 ### 5. Frontend Interaction
 
