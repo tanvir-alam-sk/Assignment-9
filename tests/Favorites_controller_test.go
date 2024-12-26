@@ -8,6 +8,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/jarcoal/httpmock"
+
 	beego "github.com/beego/beego/v2/server/web"
 	"github.com/stretchr/testify/assert"
 )
@@ -89,6 +91,7 @@ func TestSaveFavorite(t *testing.T) {
 	}
 }
 
+// --------------------------
 func TestGetFavorites(t *testing.T) {
 	// Initialize controller
 	controller := &controllers.FavoritesController{}
@@ -107,22 +110,42 @@ func TestGetFavorites(t *testing.T) {
 			expectedStatus:  http.StatusOK,
 			expectedError:   "Error parsing API response",
 		},
+		{
+			name:            "api_success",
+			mockAPIStatus:   http.StatusOK,
+			mockAPIResponse: `{"data": [{"id": 1, "name": "Favorite Item"}]}`,
+			expectedStatus:  http.StatusOK,
+			expectedError:   "",
+		},
 	}
 
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
-			// Create test context
+			// Create a test context and recorder
 			w := httptest.NewRecorder()
-			r, _ := http.NewRequest("GET", "/api/favorites", nil)
 
+			// Mock external HTTP request to simulate the API behavior
+			httpmock.Activate()
+			defer httpmock.DeactivateAndReset()
+
+			// Simulate the external API's behavior
+			httpmock.RegisterResponder("GET", "https://api.thecatapi.com/v1/favourites",
+				httpmock.NewStringResponder(tc.mockAPIStatus, tc.mockAPIResponse))
+
+			// Create the request to the Beego handler
+			r, _ := http.NewRequest("GET", "/favorites", nil)
+
+			// Serve the HTTP request through the Beego app
 			beego.BeeApp.Handlers.ServeHTTP(w, r)
 
-			// Call the handler
+			// Call the controller method (this will trigger the external API request)
 			controller.GetFavorites()
 
-			// Parse response
+			// Parse the response from the controller
 			var response map[string]interface{}
-			json.Unmarshal(w.Body.Bytes(), &response)
+			if err := json.Unmarshal(w.Body.Bytes(), &response); err != nil {
+				t.Fatalf("Error unmarshalling response: %v", err)
+			}
 
 			// Assert response status
 			assert.Equal(t, tc.expectedStatus, w.Code)
@@ -138,24 +161,22 @@ func TestGetFavorites(t *testing.T) {
 	}
 }
 
+// --------------------------
+
 // func TestDeleteFavorite(t *testing.T) {
 // 	// Initialize controller
 // 	controller := &controllers.FavoritesController{}
 
 // 	tests := []struct {
 // 		name            string
+// 		requestBody     controllers.FavoriteRequest
 // 		favoriteID      string
 // 		mockAPIStatus   int
 // 		mockAPIResponse string
 // 		expectedStatus  int
 // 		expectedError   string
 // 	}{
-// 		{
-// 			name:           "successful_delete",
-// 			favoriteID:     "123",
-// 			mockAPIStatus:  http.StatusOK,
-// 			expectedStatus: http.StatusOK,
-// 		},
+
 // 		{
 // 			name:           "missing_id",
 // 			favoriteID:     "",
@@ -176,7 +197,8 @@ func TestGetFavorites(t *testing.T) {
 // 		t.Run(tc.name, func(t *testing.T) {
 // 			// Create test context
 // 			w := httptest.NewRecorder()
-// 			r, _ := http.NewRequest("DELETE", "/favourite/"+tc.favoriteID, nil)
+// 			reqBody, _ := json.Marshal(tc.requestBody)
+// 			r, _ := http.NewRequest("DELETE", "/favourite/"+tc.favoriteID, bytes.NewBuffer(reqBody))
 
 // 			beego.BeeApp.Handlers.ServeHTTP(w, r)
 
