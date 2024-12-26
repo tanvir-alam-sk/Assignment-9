@@ -64,7 +64,6 @@ func (c *FavoritesController) SaveFavorite() {
 
 	// Prepare the API request payload
 	payload, _ := json.Marshal(reqBody)
-	fmt.Println(payload)
 
 	client := &http.Client{}
 	req, err := http.NewRequest("POST", apiURL, bytes.NewBuffer(payload))
@@ -120,8 +119,11 @@ func (c *FavoritesController) SaveFavorite() {
 
 type Favorite struct {
 	ID     int    `json:"id"`
-	Image  string `json:"image_id"`
-	Status string `json:"status"`
+	UserID string `json:"user_id"`
+	Image  struct {
+		ID  string `json:"id"`
+		URL string `json:"url"`
+	} `json:"image"`
 }
 
 // GetFavorites handles the GET request to fetch favorite items
@@ -174,6 +176,63 @@ func (c *FavoritesController) GetFavorites() {
 	c.Data["json"] = map[string]interface{}{
 		"message": "Fetched favorites successfully",
 		"data":    responseData,
+	}
+	c.ServeJSON()
+}
+
+// Delete Fevorite
+func (c *FavoritesController) DeleteFavourite() {
+	apiKey, _ := beego.AppConfig.String("catapi::apikey")
+	baseURL, _ := beego.AppConfig.String("catapi::apiurl")
+
+	// Extract the favorite ID from the request parameters
+	favoriteID := c.Ctx.Input.Param(":id")
+	if favoriteID == "" {
+		c.Data["json"] = map[string]string{"error": "Favorite ID is required"}
+		c.ServeJSON()
+		return
+	}
+
+	fmt.Println("favoriteID", favoriteID)
+
+	// Construct the API URL for deleting the favorite
+	apiURL := fmt.Sprintf("%s/favourites/%s", baseURL, favoriteID)
+
+	// Create a new DELETE request
+	req, err := http.NewRequest("DELETE", apiURL, nil)
+	if err != nil {
+		c.Data["json"] = map[string]string{"error": "Error creating request"}
+		c.ServeJSON()
+		return
+	}
+
+	// Set the headers
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("x-api-key", apiKey)
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		c.Data["json"] = map[string]string{"error": "Error making API request"}
+		c.ServeJSON()
+		return
+	}
+	defer resp.Body.Close()
+
+	// Check for successful response
+	if resp.StatusCode != http.StatusOK && resp.StatusCode != http.StatusNoContent {
+		body, _ := ioutil.ReadAll(resp.Body)
+		c.Data["json"] = map[string]interface{}{
+			"error":   "Failed to delete favorite",
+			"details": string(body),
+		}
+		c.ServeJSON()
+		return
+	}
+
+	// Send success response
+	c.Data["json"] = map[string]string{
+		"message": "Favorite deleted successfully",
 	}
 	c.ServeJSON()
 }

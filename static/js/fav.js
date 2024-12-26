@@ -5,20 +5,45 @@ const favoriteImage = () => {
     .then((response) => response.json())
     .then((data) => {
       data.data.forEach((datum) => {
+        const div = document.createElement("div");
+        div.classList.add("image-card");
         const img = document.createElement("img");
         img.src = datum.image.url;
         img.alt = "fav image";
-        console.log(datum.image.id);
+        div.appendChild(img);
+        // console.log(datum)
         const icon = document.createElement("i");
         icon.className = "fa-solid fa-trash";
-        icon.setAttribute("onclick", `deleteFav(${datum.image.id})`);
-        favorite.appendChild(img);
-        favorite.appendChild(i);
+        icon.addEventListener("click", () => deleteFav(datum.id));
+        div.appendChild(icon);
+        favorite.appendChild(div);
       });
     });
 };
 
 favoriteImage();
+
+const deleteFav = (favouriteId) => {
+  const requestOptions = {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  fetch(`/favourite/${favouriteId}`, requestOptions)
+    .then((response) => {
+      if (response.ok) {
+        favoriteImage()
+        console.log("Favourite deleted successfully");
+      } else {
+        console.error("Failed to delete favourite");
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+};
 
 const gridButton = document.getElementById("grid-view-btn");
 const listButton = document.getElementById("list-view-btn");

@@ -56,6 +56,16 @@ button.active {
     height: 400px;
     overflow: auto;
 }
+.image-card{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+.fa-trash{
+    font-size: 20px;
+    color:rgb(182, 35, 35);
+}
 
 #image-section img {
     width: 160px;
@@ -71,6 +81,6 @@ button.active {
 }
 
 #image-section.list-view img {
-    width: 100%;
+    width: 96%;
     height: auto;
 }

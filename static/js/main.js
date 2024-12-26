@@ -8,7 +8,6 @@ const loadImage = async () => {
   const response = await fetch("/cat/get-image");
   const data = await response.json();
   imageInfo = data;
-  console.log(imageInfo);
 
   if (data && data.length > 0) {
     img.src = data[0].url;
@@ -33,10 +32,10 @@ const dislikeImage = () => {
 };
 
 const favoriteCat = () => {
-  console.log("first")
   loadImage();
   const imageId = imageInfo[0].id; 
   const subId = "user-1234"; 
+  console.log("imageId",imageId)
 
   fetch("/api/favorites", {
     method: "POST",
@@ -50,6 +49,7 @@ const favoriteCat = () => {
       return res.json();
     })
     .then((data) => {
+      console.log(data)
        // Handle the response data
     })
     .catch((error) => {

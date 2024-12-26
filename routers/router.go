@@ -21,4 +21,5 @@ func init() {
 
 	beego.Router("/api/favorites", &controllers.FavoritesController{}, "get:GetFavorites")
 	beego.Router("/api/favorites", &controllers.FavoritesController{}, "post:SaveFavorite")
+	beego.Router("/favourite/:id", &controllers.FavoritesController{}, "delete:DeleteFavourite")
 }
